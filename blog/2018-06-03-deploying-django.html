@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>Deploying Django App</title>
+
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="/theme/css/homepage_style.css" rel="stylesheet">
+<link href="/theme/css/clean-blog.css" rel="stylesheet">
+<link href="/theme/css/code_blocks/darkly.css" rel="stylesheet">
+
+
+
+
+
+<meta name="description" content="How to set up a Django app deployment on an Ubuntu server: initial configuration of the server and then setting up the app">
+
+<meta name="author" content="vladimir gorea">
+
+<meta name="tags" content="linux">
+<meta name="tags" content="django">
+<meta name="tags" content="unix">
+<meta name="tags" content="deployment">
+
+    <meta property="og:locale" content="">
+    <meta property="og:site_name" content="smile services">
+
+<meta property="og:type" content="article">
+<meta property="article:author" content="/author/vladimir-gorea.html">
+<meta property="og:url" content="/blog/2018-06-03-deploying-django.html">
+<meta property="og:title" content="Deploying Django App">
+<meta property="article:published_time" content="2018-06-03 10:20:00+02:00">
+<meta property="og:description" content="How to set up a Django app deployment on an Ubuntu server: initial configuration of the server and then setting up the app">
+
+<meta property="og:image" content="/theme/images/post-bg.jpg">
+    <link rel="icon" type="image/svg+xml" href="/theme/images/logo_small.svg">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md fixed-top">
+    <div class="container">
+        <input type="checkbox" id="navbar-toggle-cbox">
+        <a class="navbar-brand" href="/">
+            <svg viewBox="0 0 80 120" width="30" height="30" preserveAspectRatio="xMidYMid meet">
+                <g transform="translate(0.000000,104.000000) scale(0.100000,-0.100000)">
+                    <path d="M208 1029 c-72 -11 -146 -56 -171 -104 -20 -37 -22 -58 -25 -257 l-4
+-218 70 0 70 0 4 205 3 205 28 27 c23 23 36 28 77 28 41 0 54 -5 77 -28 l28
+-27 3 -205 3 -205 70 0 69 0 0 194 c0 107 4 206 10 220 21 57 128 73 174 27
+20 -20 21 -35 26 -217 6 -226 6 -227 95 -222 l50 3 0 205 c0 216 -6 249 -49
+299 -62 70 -233 96 -326 48 l-45 -22 -50 21 c-60 26 -123 34 -187 23z"></path>
+                    <path d="M24 303 c13 -100 82 -195 173 -242 203 -103 486 -57 599 98 31 43 44
+79 59 159 l7 32 -71 0 c-69 0 -71 -1 -77 -27 -22 -103 -84 -152 -217 -174 -94
+-15 -219 16 -281 70 -24 21 -56 84 -56 111 0 18 -6 20 -71 20 l-72 0 7 -47z"></path>
+                </g>
+            </svg>
+        </a>
+        <label for="navbar-toggle-cbox" class="navbar-toggler navbar-toggle collapsed" data-toggle="collapse"
+               data-target="#navbar"
+               aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span>
+                <svg viewBox="0 0 80 20" width="30" height="30">
+                  <rect width="80" height="10"></rect>
+                  <rect y="20" width="80" height="10"></rect>
+                  <rect y="40" width="80" height="10"></rect>
+                </svg>
+            </span>
+        </label>
+        <div class="navbar-collapse collapse" id="navbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/blog">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/#tech-stack">Technology</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/#contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav><!-- Page Header -->
+            <header class="jumbotron"
+                    style="background-image: url('/theme/images/post-bg.jpg')">
+                <div id="particles">
+                </div>
+                <div class="slider">
+                    <h1>Deploying Django App</h1>
+                    <span class="meta">Posted by
+                    <a href="/author/vladimir-gorea.html">vladimir gorea</a>
+                 on Sun 03 June 2018
+        </span>
+                    <span class="meta">Updated on Sun 05 July 2020</span>
+                    
+                </div>
+            </header>
+            <!-- Post Content -->
+            <section class="article">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2 col-md-12">
+                            <h2>Workplan</h2>
+<ol>
+<li>Install nginx, python, virtualenv, certbot, postgresql etc</li>
+<li>Create user named as app</li>
+<li>Clone the app repo in the home folder of the user</li>
+<li>Make virtualenv</li>
+<li>Run the scripts for the app - install requirements, collectstatic, etc</li>
+<li>Create gunicorn_start file in the user dir</li>
+<li>Create nginx config file</li>
+<li>Add gunicorn service to systemd or supervisor</li>
+</ol>
+<h2>Initial setup</h2>
+<p>create user with sudo rights</p>
+<div class="highlight"><pre><span></span>adduser <span class="o">{</span>name<span class="o">}</span>
+paswd <span class="o">{</span>name<span class="o">}</span>
+usermod -aG sudo <span class="o">{</span>name<span class="o">}</span>
+su <span class="o">{</span>name<span class="o">}</span>
+</pre></div>
+
+
+<ul>
+<li>add publickey and set up ssh connection</li>
+<li>remove password and root login</li>
+<li>create user for each app</li>
+</ul>
+<h2>Install python,django,virtualenv,nginx,gunicorn</h2>
+<div class="highlight"><pre><span></span>sudo apt-get update
+sudo apt-get -y upgrade
+sudo apt install certbot
+sudo apt install python-certbot-nginx
+sudo apt-get -y install build-essential libpq-dev python-dev
+sudo apt-get -y install postgresql postgresql-contrib
+sudo apt-get -y install nginx
+sudo apt-get -y install supervisor
+sudo systemctl <span class="nb">enable</span> supervisor
+sudo systemctl start supervisor
+sudo apt-get -y install python3-virtualenv
+sudo apt-get -y install python3-pip
+</pre></div>
+
+
+<p>Install optional Redis, Elasticsearch</p>
+<h2>Set up django project</h2>
+<ul>
+<li>create new user for each app
+adduser {user}</li>
+<li>create (virtual env)[https://docs.python.org/3/library/venv.html] in ~/www/{project_name}</li>
+</ul>
+<div class="highlight"><pre><span></span>python3 -m venv <span class="o">{</span>project_name<span class="o">}</span>
+</pre></div>
+
+
+<ul>
+<li>activate the venv </li>
+</ul>
+<div class="highlight"><pre><span></span><span class="nb">source</span> ~/www/<span class="o">{</span>project_name<span class="o">}</span>
+</pre></div>
+
+
+<ul>
+<li>clone repo in ~/www/{project_name}/repo</li>
+<li>install requirements</li>
+</ul>
+<div class="highlight"><pre><span></span>pip install -r repo/requirements.txt
+</pre></div>
+
+
+<ul>
+<li>create .env file (if project requires it)</li>
+<li>collectstatic and create superuser</li>
+</ul>
+<div class="highlight"><pre><span></span>python manage.py collectstatic
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+</pre></div>
+
+
+<h2>Set up postgresql</h2>
+<div class="highlight"><pre><span></span>sudo apt-get -y install build-essential libpq-dev python-dev
+sudo apt-get -y install postgresql postgresql-contrib
+su - postgres
+createuser <span class="o">{</span>db_username<span class="o">}</span>
+createdb <span class="o">{</span>db_name<span class="o">}</span> --owner <span class="o">{</span>db_username<span class="o">}</span>
+psql -c <span class="s2">&quot;ALTER USER {db_username} WITH PASSWORD &#39;{password}&#39;&quot;</span>
+</pre></div>
+
+
+<h2>Set up gunicorn</h2>
+<p>create gunicorn_start file in {app root}/bin/</p>
+<div class="highlight"><pre><span></span><span class="c1"># gunicorn_start file</span>
+<span class="c1">#!/bin/bash</span>
+
+<span class="nv">NAME</span><span class="o">=</span><span class="s2">&quot;memeashirt.smile-services.ro&quot;</span>
+<span class="nv">DIR</span><span class="o">=</span>/home/smileservices/www/memeashirt/repo
+<span class="nv">USER</span><span class="o">=</span>smileservices
+<span class="nv">GROUP</span><span class="o">=</span>smileservices
+<span class="nv">WORKERS</span><span class="o">=</span><span class="m">3</span>
+<span class="nv">BIND</span><span class="o">=</span>unix:/home/smileservices/www/memeashirt/run/gunicorn.sock
+<span class="nv">DJANGO_SETTINGS_MODULE</span><span class="o">=</span>tshirtstore.settings
+<span class="nv">DJANGO_WSGI_MODULE</span><span class="o">=</span>main.wsgi
+<span class="nv">LOG_LEVEL</span><span class="o">=</span>error
+
+<span class="nb">cd</span> <span class="nv">$DIR</span>
+<span class="nb">source</span> ../bin/activate
+
+<span class="nb">export</span> <span class="nv">DJANGO_SETTINGS_MODULE</span><span class="o">=</span><span class="nv">$DJANGO_SETTINGS_MODULE</span>
+<span class="nb">export</span> <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$DIR</span>:<span class="nv">$PYTHONPATH</span>
+
+<span class="nb">exec</span> ../bin/gunicorn <span class="si">${</span><span class="nv">DJANGO_WSGI_MODULE</span><span class="si">}</span>:application <span class="se">\</span>
+  --name <span class="nv">$NAME</span> <span class="se">\</span>
+  --workers <span class="nv">$WORKERS</span> <span class="se">\</span>
+  --user<span class="o">=</span><span class="nv">$USER</span> <span class="se">\</span>
+  --group<span class="o">=</span><span class="nv">$GROUP</span> <span class="se">\</span>
+  --bind<span class="o">=</span><span class="nv">$BIND</span> <span class="se">\</span>
+  --log-level<span class="o">=</span><span class="nv">$LOG_LEVEL</span> <span class="se">\</span>
+  --log-file<span class="o">=</span>-
+</pre></div>
+
+
+<p>Make it executable</p>
+<div class="highlight"><pre><span></span>chmod u+x bin/gunicorn_start
+</pre></div>
+
+
+<ul>
+<li>create empty directory 'run' where gunicorn.sock will be created</li>
+<li>create directory 'logs' with empty file gunicorn-error.log</li>
+</ul>
+<h3>Add gunicorn to supervisor or systemd</h3>
+<p>This step is required for making sure django app is run even if it stops
+- set up supervisor /etc/supervisor/conf.d/{name}.conf</p>
+<div class="highlight"><pre><span></span><span class="o">[</span>program:<span class="o">{</span>name<span class="o">}]</span>
+<span class="nv">command</span><span class="o">=</span>/home/<span class="o">{</span>user<span class="o">}</span>/www/<span class="o">{</span>dir<span class="o">}</span>/bin/gunicorn_start
+<span class="nv">user</span><span class="o">={</span>user<span class="o">}</span>
+<span class="nv">autostart</span><span class="o">=</span><span class="nb">true</span>
+<span class="nv">autorestart</span><span class="o">=</span><span class="nb">true</span>
+<span class="nv">redirect_stderr</span><span class="o">=</span><span class="nb">true</span>
+<span class="nv">stdout_logfile</span><span class="o">=</span>/home/<span class="o">{</span>user<span class="o">}</span>/www/memeashirt/logs/gunicorn-error.log
+</pre></div>
+
+
+<ul>
+<li>add the new task to supervisor</li>
+</ul>
+<div class="highlight"><pre><span></span>sudo supervisorctl reread
+sudo supervisorctl update
+</pre></div>
+
+
+<h2>Set up nginx</h2>
+<ul>
+<li>create vhost file in /etc/nginx/sites-available/{name}</li>
+</ul>
+<div class="highlight"><pre><span></span>upstream app_memeashirt_test <span class="o">{</span>                                                                    
+    server unix:/home/smileservices/www/memeashirt.smile-services.ro/run/gunicorn.sock <span class="nv">fail_timeout</span><span class="o">=</span><span class="m">0</span><span class="p">;</span>
+<span class="o">}</span>                                                                                                 
+
+server <span class="o">{</span>                                                                                          
+
+    <span class="c1"># add here the ip address of your server                                                      </span>
+    <span class="c1"># or a domain pointing to that ip (like example.com or www.example.com)                       </span>
+    server_name memeashirt.smile-services.ro<span class="p">;</span>                                                     
+
+    keepalive_timeout <span class="m">5</span><span class="p">;</span>                                                                          
+    client_max_body_size 4G<span class="p">;</span>                                                                      
+
+    access_log /home/smileservices/www/memeashirt/logs/nginx-access.log<span class="p">;</span>                          
+    error_log /home/smileservices/www/memeashirt/logs/nginx-error.log<span class="p">;</span>                            
+
+    location /static/ <span class="o">{</span>                                                                           
+        <span class="nb">alias</span> /home/smileservices/www/memeashirt/repo/static_col/<span class="p">;</span>                                
+    <span class="o">}</span>                                                                                             
+
+    <span class="c1"># checks for static file, if not found proxy to app                                           </span>
+    location / <span class="o">{</span>                                                                                  
+        try_files <span class="nv">$uri</span> @proxy_to_app<span class="p">;</span>                                                             
+    <span class="o">}</span>                                                                                             
+
+    location @proxy_to_app <span class="o">{</span>                                                                      
+      proxy_set_header X-Forwarded-For <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>                                
+      proxy_set_header Host <span class="nv">$http_host</span><span class="p">;</span>                                                           
+      proxy_redirect off<span class="p">;</span>                                                                         
+      proxy_pass http://app_memeashirt_test<span class="p">;</span>                                                      
+      auth_basic <span class="s2">&quot;Restricted Access&quot;</span><span class="p">;</span>                                                             
+      auth_basic_user_file /etc/nginx/memeashirt.htpasswd<span class="p">;</span>                                        
+    <span class="o">}</span>                                                                                             
+<span class="o">}</span>                                                                                                 
+</pre></div>
+
+
+<p>Make a soft symlink to enable the virtual block </p>
+<div class="highlight"><pre><span></span>ln -s /etc/ngnix/sites-available/<span class="o">{</span>name<span class="o">}</span> /etc/nginx/sites-enabled/<span class="o">{</span>name<span class="o">}</span>
+</pre></div>
+
+
+<p>Check the nginx configuration and restart it</p>
+<div class="highlight"><pre><span></span>sudo nginx -t
+sudo service nginx restart
+</pre></div>
+
+
+<h1>Set up ssl</h1>
+<div class="highlight"><pre><span></span>sudo certbot --nginx -d <span class="o">{</span>domain name<span class="o">}</span> 
+</pre></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="article">
+                <div class="container">
+                    <div class="tags">
+                        <p>tags: <a href="/tag/linux.html">linux</a>, <a href="/tag/django.html">django</a>, <a href="/tag/unix.html">unix</a>, <a href="/tag/deployment.html">deployment</a></p>
+                    </div>
+                </div>
+            </section>
+
+            <script>
+                var fullHeightJumbotron = false;
+            </script>
+<script src="/theme/js/particles.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var STATIC_URL = "/theme"
+        var myNav = document.querySelector('nav');
+        var jumbotron = document.querySelector('.jumbotron');
+        var slider = document.querySelector('.slider');
+        window.onscroll = function () {
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            "use strict";
+            if (scrollTop >= jumbotron.offsetHeight - myNav.offsetHeight) {
+                myNav.classList.add("stuck");
+            } else {
+                myNav.classList.remove("stuck");
+            }
+        };
+        jumbotron.setAttribute('style', 'height: ' + (fullHeightJumbotron ? window.innerHeight : slider.height * 1.8) + 'px');
+        particlesJS.load('particles', STATIC_URL + '/js/particles.json', function () {
+        });
+    });
+</script></body>
+
+</html>
