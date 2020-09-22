@@ -128,11 +128,12 @@
 </ol>
 <h1>Versatile Image Field</h1>
 <p>I think this is the best image handling library to work with Django as it has the most features and is widely used in big projects like Saleor.</p>
-<p>Pros: 
-1. widely used
-2. easy to set up</p>
-<p>Cons:
-1. need to use the post_delete signal to clear the files and post_save to create the thumbnails:</p>
+<p>Good points:</p>
+<ul>
+<li>widely used</li>
+<li>easy to set up</li>
+</ul>
+<p>Using the post_delete signal to clear the files and post_save to create the thumbnails:</p>
 <div class="highlight"><pre><span></span><span class="c1"># someapp/models.py</span>
 <span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
 <span class="kn">from</span> <span class="nn">django.dispatch</span> <span class="kn">import</span> <span class="n">receiver</span>
