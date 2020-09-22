@@ -108,9 +108,11 @@
                     <div class="row">
                         <div class="col-lg-8 col-lg-offset-2 col-md-12">
                             <h2>Resources for reading</h2>
-<p><a href="https://lincolnloop.com/blog/django-logging-right-way/">django logging the right way</a>
-<a href="https://djangodeconstructed.com/2018/12/18/django-and-python-logging-in-plain-english/">django and logging in plain english</a>
-<a href="https://mattsegal.dev/file-logging-django.html">django logging in production</a></p>
+<ul>
+<li><a href="https://lincolnloop.com/blog/django-logging-right-way/">django logging the right way</a></li>
+<li><a href="https://djangodeconstructed.com/2018/12/18/django-and-python-logging-in-plain-english/">django and logging in plain english</a></li>
+<li><a href="https://mattsegal.dev/file-logging-django.html">django logging in production</a></li>
+</ul>
 <h2>Basic usage</h2>
 <ol>
 <li>Loggers are messages containers</li>
@@ -118,47 +120,48 @@
 <li>Filters can be used for both loggers and handlers</li>
 <li>Formatters handle how to output the messages. Belong to handlers</li>
 </ol>
-<p>set up logging in settings.py</p>
-<div class="highlight"><pre><span></span><span class="err">LOGGING = {</span>
-<span class="err">    &#39;version&#39;: 1,</span>
-<span class="err">    &#39;disable_existing_loggers&#39;: False,</span>
-<span class="err">    &#39;formatters&#39;: {</span>
-<span class="err">        &#39;verbose&#39;: {</span>
-<span class="err">            &#39;format&#39;: &#39;{levelname} {asctime} {module} {process:d} {thread:d} {message}&#39;,</span>
-<span class="err">            &#39;style&#39;: &#39;{&#39;,</span>
-<span class="err">        },</span>
-<span class="err">        &#39;simple&#39;: {</span>
-<span class="err">            &#39;format&#39;: &#39;{levelname} {message}&#39;,</span>
-<span class="err">            &#39;style&#39;: &#39;{&#39;,</span>
-<span class="err">        },</span>
-<span class="err">    },</span>
-<span class="err">    &#39;handlers&#39;: {</span>
-<span class="err">        &#39;console&#39;: {</span>
-<span class="err">            &#39;class&#39;: &#39;logging.StreamHandler&#39;,</span>
-<span class="err">            &#39;formatter&#39;: &#39;verbose&#39;</span>
-<span class="err">        },</span>
-<span class="err">    },</span>
-<span class="err">    &#39;root&#39;: {</span>
-<span class="err">        &#39;handlers&#39;: [&#39;console&#39;],</span>
-<span class="err">        &#39;level&#39;: &#39;WARNING&#39;,</span>
-<span class="err">    },</span>
-<span class="err">    &#39;django&#39;: {</span>
-<span class="err">        &#39;handlers&#39;: [&#39;console&#39;],</span>
-<span class="err">        &#39;level&#39;: &#39;DEBUG&#39;,</span>
-<span class="err">        &#39;propagate&#39;: True,</span>
-<span class="err">    },</span>
-<span class="err">    &#39;someapp.urls&#39;: {</span>
-<span class="err">        &#39;handlers&#39;: [&#39;console&#39;],</span>
-<span class="err">        &#39;level&#39;: &#39;DEBUG&#39;,</span>
-<span class="err">        &#39;propagate&#39;: True,</span>
-<span class="err">    }</span>
-<span class="err">}</span>
+<p>Set up logging in settings.py</p>
+<div class="highlight"><pre><span></span><span class="n">LOGGING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;disable_existing_loggers&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">&#39;formatters&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;verbose&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{levelname}</span><span class="s1"> </span><span class="si">{asctime}</span><span class="s1"> </span><span class="si">{module}</span><span class="s1"> </span><span class="si">{process:d}</span><span class="s1"> </span><span class="si">{thread:d}</span><span class="s1"> </span><span class="si">{message}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;style&#39;</span><span class="p">:</span> <span class="s1">&#39;{&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;simple&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{levelname}</span><span class="s1"> </span><span class="si">{message}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;style&#39;</span><span class="p">:</span> <span class="s1">&#39;{&#39;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;console&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;logging.StreamHandler&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;formatter&#39;</span><span class="p">:</span> <span class="s1">&#39;verbose&#39;</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;root&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;console&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;WARNING&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;django&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;console&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;propagate&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;someapp.urls&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;handlers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;console&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;propagate&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 
-<p>use logger</p>
+<p>Use logger</p>
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Some warning message&#39;</span><span class="p">)</span>
 </pre></div>
                         </div>
                     </div>
