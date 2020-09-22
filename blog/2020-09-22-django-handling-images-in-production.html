@@ -129,15 +129,15 @@
 <h1>Versatile Image Field</h1>
 <p>I think this is the best image handling library to work with Django as it has the most features and is widely used in big projects like Saleor.</p>
 <p>Pros: 
-- widely used
-- easy to set up</p>
+1. widely used
+2. easy to set up</p>
 <p>Cons:
-- need to use the post_delete signal to clear the files and post_save to create the thumbnails:
-    ```python
-    # someapp/models.py
-    from django.db import models
-    from django.dispatch import receiver</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">versatileimagefield.fields</span> <span class="kn">import</span> <span class="n">VersatileImageField</span>
+1. need to use the post_delete signal to clear the files and post_save to create the thumbnails:</p>
+<div class="highlight"><pre><span></span><span class="c1"># someapp/models.py</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.dispatch</span> <span class="kn">import</span> <span class="n">receiver</span>
+
+<span class="kn">from</span> <span class="nn">versatileimagefield.fields</span> <span class="kn">import</span> <span class="n">VersatileImageField</span>
 
 <span class="k">class</span> <span class="nc">ExampleImageModel</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">VersatileImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s1">&#39;images/&#39;</span><span class="p">)</span>
@@ -150,8 +150,7 @@
     <span class="c1"># Deletes Image Renditions</span>
     <span class="n">instance</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">delete_all_created_images</span><span class="p">()</span>
     <span class="c1"># Deletes Original Image</span>
-    <span class="n">instance</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">save</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-<span class="sb">``</span><span class="err">`</span>
+    <span class="n">instance</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
 
