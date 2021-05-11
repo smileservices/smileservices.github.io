@@ -9,13 +9,9 @@
 
     <title>Important Unix Commands</title>
 
-    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900"
-          rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="/theme/css/homepage_style.css" rel="stylesheet">
-<link href="/theme/css/clean-blog.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,700">
+    <link href="/theme/css/main.css" rel="stylesheet">
+    <link href="/theme/icons/style.css" rel="stylesheet">
 <link href="/theme/css/code_blocks/darkly.css" rel="stylesheet">
 
 
@@ -41,85 +37,81 @@
 <meta property="og:description" content="Most common linux concepts and commands: files permissions, users, scripting, groups, ssh, filesystem, snap packages">
 
 <meta property="og:image" content="/theme/images/post-bg.jpg">
-    <link rel="icon" type="image/svg+xml" href="/theme/images/logo_small.svg">
+    <link rel="icon" type="image/png" href="/theme/images/logo.svg">
 </head>
 
 <body>
-<nav class="navbar navbar-expand-md fixed-top">
-    <div class="container">
-        <input type="checkbox" id="navbar-toggle-cbox">
-        <a class="navbar-brand" href="/">
-            <svg viewBox="0 0 80 120" width="30" height="30" preserveAspectRatio="xMidYMid meet">
-                <g transform="translate(0.000000,104.000000) scale(0.100000,-0.100000)">
-                    <path d="M208 1029 c-72 -11 -146 -56 -171 -104 -20 -37 -22 -58 -25 -257 l-4
--218 70 0 70 0 4 205 3 205 28 27 c23 23 36 28 77 28 41 0 54 -5 77 -28 l28
--27 3 -205 3 -205 70 0 69 0 0 194 c0 107 4 206 10 220 21 57 128 73 174 27
-20 -20 21 -35 26 -217 6 -226 6 -227 95 -222 l50 3 0 205 c0 216 -6 249 -49
-299 -62 70 -233 96 -326 48 l-45 -22 -50 21 c-60 26 -123 34 -187 23z"></path>
-                    <path d="M24 303 c13 -100 82 -195 173 -242 203 -103 486 -57 599 98 31 43 44
-79 59 159 l7 32 -71 0 c-69 0 -71 -1 -77 -27 -22 -103 -84 -152 -217 -174 -94
--15 -219 16 -281 70 -24 21 -56 84 -56 111 0 18 -6 20 -71 20 l-72 0 7 -47z"></path>
-                </g>
-            </svg>
+<nav>
+    <div class="left-side">
+        <a class="logo" href="/">
+            <img src="/theme/images/logo.svg" alt="">
+            SmileServices.dev
         </a>
-        <label for="navbar-toggle-cbox" class="navbar-toggler navbar-toggle collapsed" data-toggle="collapse"
-               data-target="#navbar"
-               aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span>
-                <svg viewBox="0 0 80 20" width="30" height="30">
-                  <rect width="80" height="10"></rect>
-                  <rect y="20" width="80" height="10"></rect>
-                  <rect y="40" width="80" height="10"></rect>
-                </svg>
-            </span>
-        </label>
-        <div class="navbar-collapse collapse" id="navbar">
-            <ul class="navbar-nav mr-auto">
+    </div>
+    <div class="right-side">
+        <div class="menu-container" id="navbar-menu">
+            <ul class="nav-menu mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/#showcases">Showcases</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/#process">Work Process</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/blog">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/#tech-stack">Technology</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/#contact">Contact</a>
+                    <a class="nav-link cta-button" onclick="openModal('modal-contact')">Contact</a>
                 </li>
             </ul>
         </div>
+        <div class="toggle-nav-menu" onclick="document.getElementById('navbar-menu').classList.toggle('open')">
+            <svg width="25" height="21" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0.993408" y1="2.45703" x2="24.9934" y2="2.45703" stroke-width="4"/>
+                <line x1="0.993408" y1="10.457" x2="24.9934" y2="10.457" stroke-width="4"/>
+                <line x1="0.993408" y1="18.457" x2="24.9934" y2="18.457" stroke-width="4"/>
+            </svg>
+        </div>
     </div>
-</nav><!-- Page Header -->
-            <header class="jumbotron"
-                    style="background-image: url('/theme/images/post-bg.jpg')">
-                <div id="particles">
-                </div>
-                <div class="slider">
-                    <h1>Important Unix Commands</h1>
-                    <span class="meta">Posted by
-                    <a href="/author/vladimir-gorea.html">vladimir gorea</a>
-                 on Sat 03 February 2018
-        </span>
-                    <span class="meta">Updated on Sun 05 July 2020</span>
-                    
-                </div>
-            </header>
-            <!-- Post Content -->
-            <section class="article">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8 col-lg-offset-2 col-md-12">
-                            <h2>Permissions</h2>
+</nav><header>
+    <div class="left-side">
+        <h1>Blog</h1>
+    </div>
+    <div class="right-side">
+        <div class="subtext">
+            <h3>Cost <span class="blue-text">effective</span> solutions</h3>
+            <h3>Productive meetings with <span class="blue-text">fast deliveries</span></h3>
+            <h3><span class="blue-text">24/7 support</span> with sameday response</h3>
+        </div>
+    </div>
+</header>
+<!-- Post Content -->
+<section class="article">
+    <div class="header">
+        <h2>Important Unix Commands</h2>
+        <div class="subheading">
+            
+        </div>
+        <div class="smalltext">
+            <span class="meta">Posted by
+                <a href="/author/vladimir-gorea.html">vladimir gorea</a>
+             on Sat 03 February 2018</span>
+<span class="meta">Updated on Sun 05 July 2020</span>        </div>
+    </div>
+    <h3>Intro</h3>
+<p>Most common linux concepts and commands: files permissions, users, scripting, groups, ssh, filesystem, snap packages</p>
+<h3>Permissions</h3>
 <p>These are the "rights" that an user has on certain files or folders. They are read,write and execute. To folders, execute means opening it. Only the file owner and root can modify the permissions.
 HOWEVER - a file can be replaced by its copy and thus gain access to setting permissions on it</p>
 <div class="highlight"><pre><span></span>chmod <span class="m">777</span> -R <span class="o">{</span>folder<span class="o">}</span>
 </pre></div>
 
 
-<h3>What is the sudo command?</h3>
+<p><strong>What is the sudo command?</strong></p>
 <p>The root user is enabled to do anything on the system. This makes it very powerful to use everytime, so instead we use users with limited permissions. For a regular user to access the restricted permissions it must use "sudo" in front of the command. It will prompt for the user password afterwards.</p>
 <p>To add more users to the sudo privileges you must use the "visudo" command to edit the sudo file. Also, to enable an user to use the sudo command, the user must be a member of the sudo group.</p>
-<h2>How to set up users and groups</h2>
-<h3>What are users</h3>
+<h3>How to set up users and groups</h3>
+<p><strong>What are users</strong></p>
 <p>Linux is a multiuser operating system. There are human users - that log into the system - and system users - used for non-interactive actions. Linux treats them the same, only the ID range of them is different. Users can be in multiple groups at once. The information about users is stored in /etc/passwd file</p>
 <p>Read about linux users on  <a href="https://linuxacademy.com/howtoguides/posts/show/topic/12659-understanding-linux-users-and-groups">linuxacademy</a></p>
 <div class="highlight"><pre><span></span>root@ubuntu:~$ head -1 /etc/passwd
@@ -129,7 +121,7 @@ root:x:0:0:root:/root:/bin/bash
 
 <p>get current user with "whoami"
 change user with "su"</p>
-<h1>Scripting</h1>
+<h3>Scripting</h3>
 <p>make script to run as anoher user</p>
 <div class="highlight"><pre><span></span>su - <span class="o">{</span>username<span class="o">}</span> <span class="s">&lt;&lt;-&#39;EOF&#39;</span>
 <span class="s">    {command 1}</span>
@@ -139,31 +131,31 @@ change user with "su"</p>
 </pre></div>
 
 
-<h3>Adding users</h3>
+<p><strong>Adding users</strong></p>
 <p>If an user is created without setting a primary group, then a group with its name is created and assigned to it</p>
 <div class="highlight"><pre><span></span>adduser --home <span class="o">{</span>home address<span class="o">}</span> -c <span class="o">{</span>comment<span class="o">}</span> <span class="o">{</span>user name<span class="o">}</span>
 </pre></div>
 
 
-<p>or single command https://www.computerhope.com/unix/useradd.htm```
-useradd -d {home dir path} -p {encrypted} -m {username}"</p>
-<p>arguments to use:
--c Adds a comment. -c “John from Accounts”
--d Specifies home directory for the user. Use this if the name of the home directory is different from the username. -d /home/accounts/john
--e Specifies the expiration date for the account in YYYY-MM-DD format. -e 2017-01-01
--g Specifies the primary group of the user. The group must already exist in the /etc/group file. -g accounts
--G Specifies the additional groups to which the user belongs. -G employees
--k Specifies the skeleton directory. The contents from the skeleton directory are copied into the user’s home directory. This flag can only be used in conjunction with the -m flag. The default skeleton directory is /etc/skel. -k /skelton/accounts
--p Specifies the password to be associated with this account. This must be an encrypted password. You can assign the password later using passwd command. -p hashed_password
--s Specifies the shell to be associated with this account. -s /bin/bash
--u Specifies the user ID to be used with this account. Without -u flag, the first available user ID will be assigned. -u 1005</p>
-<h3>Get info of user</h3>
-<p>Read /etc/passwd and /etc/group</p>
+<p>or single command <code>useradd -d {home dir path} -p {encrypted} -m {username}</code></p>
+<p>Read resource about adding users <a href="https://www.computerhope.com/unix/useradd.htm">here</a></p>
+<p><strong>Arguments to use:</strong></p>
+<p><code>c</code> Adds a comment. -c “John from Accounts”</p>
+<p><code>d</code> Specifies home directory for the user. Use this if the name of the home directory is different from the username. -d /home/accounts/john</p>
+<p><code>e</code> Specifies the expiration date for the account in YYYY-MM-DD format. -e 2017-01-01</p>
+<p><code>g</code> Specifies the primary group of the user. The group must already exist in the /etc/group file. -g accounts</p>
+<p><code>G</code> Specifies the additional groups to which the user belongs. -G employees</p>
+<p><code>k</code> Specifies the skeleton directory. The contents from the skeleton directory are copied into the user’s home directory. This flag can only be used in conjunction with the -m flag. The default skeleton directory is /etc/skel. -k /skelton/accounts</p>
+<p><code>p</code> Specifies the password to be associated with this account. This must be an encrypted password. You can assign the password later using passwd command. -p hashed_password</p>
+<p><code>s</code> Specifies the shell to be associated with this account. -s /bin/bash</p>
+<p><code>u</code> Specifies the user ID to be used with this account. Without -u flag, the first available user ID will be assigned. -u 1005</p>
+<p><strong>Get info of user</strong>
+Read /etc/passwd and /etc/group</p>
 <div class="highlight"><pre><span></span>id <span class="o">{</span>user<span class="o">}</span>
 </pre></div>
 
 
-<h3>Modifying users</h3>
+<p><strong>Modifying users</strong></p>
 <p>Set password</p>
 <div class="highlight"><pre><span></span>sudo passwd <span class="o">{</span>user<span class="o">}</span>
 </pre></div>
@@ -195,45 +187,41 @@ useradd -d {home dir path} -p {encrypted} -m {username}"</p>
 </pre></div>
 
 
-<h3>Delete user</h3>
-<p>This not only deletes the user but also removes all the files that belong to the user including those that are outside the home directory.</p>
+<p><strong>Delete user</strong>
+This not only deletes the user but also removes all the files that belong to the user including those that are outside the home directory.</p>
 <p>to remove user and its files/home folder add -r flag</p>
 <div class="highlight"><pre><span></span>sudo userdel -r <span class="o">{</span>user<span class="o">}</span>
 </pre></div>
 
 
-<h2>Groups</h2>
+<h3>Groups</h3>
 <p>Groups organize users permissions. When a file/folder is created it belongs by default to the user's primary group. Users that share the same group have the permissions set by the file/folder group permissions. </p>
-<p>create new group</p>
-<div class="highlight"><pre><span></span>groupadd <span class="o">{</span>groupname<span class="o">}</span>
-</pre></div>
-
-
-<h3>How to change a folder owner and group</h3>
+<p>create new group <code>groupadd {groupname}</code></p>
+<p><strong>How to change a folder owner and group</strong></p>
 <div class="highlight"><pre><span></span>chown <span class="o">{</span>user<span class="o">}</span>:<span class="o">{</span>group<span class="o">}</span> <span class="o">{</span>target<span class="o">}</span>
 </pre></div>
 
 
-<p>to use recursivly apply the -R flag</p>
-<h3>How to see user's groups</h3>
+<p>To use recursivly apply the <code>-R</code> flag</p>
+<p><strong>How to see user's groups</strong></p>
 <div class="highlight"><pre><span></span>groups <span class="o">{</span>user<span class="o">}</span>
 </pre></div>
 
 
-<h3>Change primary group</h3>
+<p><strong>Change primary group</strong></p>
 <div class="highlight"><pre><span></span>chgrp <span class="o">{</span>newgroup<span class="o">}</span>
 </pre></div>
 
 
-<h2>SSH</h2>
+<h3>SSH</h3>
 <p>Read attlassian article about ssh keys - <a href="https://confluence.atlassian.com/bitbucket/set-up-an-ssh-key-728138079.html#SetupanSSHkey-ssh2">attlassian link</a></p>
 <p>Generate ssh private/public keys:</p>
 <div class="highlight"><pre><span></span>ssh-keygen
 </pre></div>
 
 
-<h4>Configuring ssh settings</h4>
-<p>SSH settings are found at /etc/ssh/sshd_config:</p>
+<p><strong>Configuring ssh settings</strong>
+SSH settings are found at /etc/ssh/sshd_config:</p>
 <div class="highlight"><pre><span></span>PasswordAuthentication no
 </pre></div>
 
@@ -249,12 +237,9 @@ PasswordAuthentication yes
 </pre></div>
 
 
-<h2>Show processes and their owners</h2>
-<div class="highlight"><pre><span></span>ps -ef <span class="p">|</span> grep nginx
-</pre></div>
-
-
-<h2>ufw (firewall)</h2>
+<h3>Investigate Processes</h3>
+<p>To show processes and their owners use <code>ps -ef | grep nginx</code></p>
+<h3>Ufw (firewall)</h3>
 <div class="highlight"><pre><span></span>sudo ufw status verbose
 sudo ufw <span class="nb">enable</span>
 sudo ufw allow http
@@ -268,15 +253,15 @@ sudo ufw allow from <span class="m">15</span>.15.15.51
 </pre></div>
 
 
-<h2>ports</h2>
+<h3>Investigate ports</h3>
 <p>see all ports</p>
 <div class="highlight"><pre><span></span>sudo netstat -tulpn
 </pre></div>
 
 
-<h2>tmux</h2>
+<h3>tmux</h3>
 <p>A terminal multiplexer (simulates multiple terminals inside one)</p>
-<h4>fix garbled screen</h4>
+<p><strong>Fix garbled screen</strong></p>
 <ul>
 <li>create .tmux.conf:</li>
 </ul>
@@ -291,91 +276,129 @@ sudo ufw allow from <span class="m">15</span>.15.15.51
 </pre></div>
 
 
-<h2>access address or port (curl, wget)</h2>
+<h3>Access address or port (curl, wget)</h3>
 <div class="highlight"><pre><span></span>curl <span class="o">{</span>address<span class="o">}</span>:<span class="o">{</span>port<span class="o">}</span>
 </pre></div>
 
 
-<h1>Fylesystem</h1>
-<h2>Empty file without removing</h2>
+<h3>Filesystem</h3>
+<h3>Empty file without removing</h3>
 <div class="highlight"><pre><span></span>truncate -s <span class="m">0</span> filename
 &gt; file.txt
 </pre></div>
 
 
-<h2>disk space</h2>
-<div class="highlight"><pre><span></span>df -h
+<p><strong>symlinks</strong></p>
+<p>Resources to read about it:</p>
+<ul>
+<li><a href="https://www.cyberciti.biz/faq/creating-soft-link-or-symbolic-link/">what is a symbolic link</a></li>
+<li><a href="https://stackoverflow.com/a/185903/1957846">explaining soft/hard links</a></li>
+</ul>
+<p>Create soft link <code>ln -s file1 link1</code></p>
+<p>Verify the created symlink with <code>ls -l file1 link1</code></p>
+<p><strong>IMPORTANT</strong>: provide full path to file and links not relative to cwd</p>
+<h3>Mount/Unmount drives</h3>
+<div class="highlight"><pre><span></span><span class="err">fdisk -l</span>
+<span class="err">sudo mount /dev/sdb1 /media/usb-drive/</span>
 </pre></div>
 
 
-<h2>symlink</h2>
-<p>Read article about <a href="https://www.cyberciti.biz/faq/creating-soft-link-or-symbolic-link/">what is a symbolic link</a></p>
-<p>Read Read article <a href="https://stackoverflow.com/a/185903/1957846">explaining soft/hard links</a></p>
-<p>create soft link</p>
-<div class="highlight"><pre><span></span>ln -s file1 link1
-</pre></div>
-
-
-<p>verify</p>
-<div class="highlight"><pre><span></span>ls -l file1 link1
-</pre></div>
-
-
-<p>IMPORTANT: provide full path to file and links not relative to cwd</p>
-<h1>System check</h1>
-<p>available memory</p>
+<h3>System check</h3>
+<p><strong>Disk space</strong></p>
+<p>Executing <code>df -h</code> will show space information in human readable format</p>
+<p><strong>Available memory</strong></p>
 <div class="highlight"><pre><span></span>free -m
 vmstat -s
 htop
 </pre></div>
 
 
-<h1>snaps</h1>
-<p>Article about managing <a href="https://www.freecodecamp.org/news/managing-ubuntu-snaps/">ubuntu snaps</a></p>
-<p>list all snap services</p>
+<h3>Snaps</h3>
+<p>Snap is the new package management software with which Ubuntu wants to replace <code>apt</code>
+Article about managing it is here: <a href="https://www.freecodecamp.org/news/managing-ubuntu-snaps/">ubuntu snaps</a></p>
+<p><strong>List all snap services</strong></p>
 <div class="highlight"><pre><span></span>snap services
 </pre></div>
 
 
-<p>stop service</p>
+<p><strong>Stop service</strong></p>
 <div class="highlight"><pre><span></span>sudo snap stop -disable <span class="o">{</span>servicename<span class="o">}</span>
 </pre></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            <section class="article">
-                <div class="container">
-                    <div class="tags">
-                        <p>tags: <a href="/tag/linux.html">linux</a>, <a href="/tag/unix.html">unix</a>, <a href="/tag/cheatsheet.html">cheatsheet</a></p>
-                    </div>
-                </div>
-            </section>
 
-            <script>
-                var fullHeightJumbotron = false;
-            </script>
-<script src="/theme/js/particles.min.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var STATIC_URL = "/theme"
-        var myNav = document.querySelector('nav');
-        var jumbotron = document.querySelector('.jumbotron');
-        var slider = document.querySelector('.slider');
-        window.onscroll = function () {
-            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-            "use strict";
-            if (scrollTop >= jumbotron.offsetHeight - myNav.offsetHeight) {
-                myNav.classList.add("stuck");
-            } else {
-                myNav.classList.remove("stuck");
-            }
-        };
-        jumbotron.setAttribute('style', 'height: ' + (fullHeightJumbotron ? window.innerHeight : slider.height * 1.8) + 'px');
-        particlesJS.load('particles', STATIC_URL + '/js/particles.json', function () {
-        });
-    });
-</script></body>
+<h3>Searching through the filesystem</h3>
+<p>A good guide on how to use <code>find</code> command is <a href="https://www.geeksforgeeks.org/find-command-in-linux-with-examples/">here</a> \
+General search for a file. example <code>find {path} -name *.txt</code></p>
+<h3>Handle machine state</h3>
+<p>Restart immediately using <code>sudo shutdown -r 0</code></p>
+    <div class="tags">
+<a href="/tag/linux.html">linux</a><a href="/tag/unix.html">unix</a><a href="/tag/cheatsheet.html">cheatsheet</a>    </div>
+</section>
+
+<footer>
+    <div class="left-side">
+        <div class="logo">SmileServices.dev</div>
+        <div class="small">© 2020, smileservices.dev All Rights Reserved.</div>
+    </div>
+    <div class="right-side">
+        <a href="/#showcases">Showcases</a>
+        <a href="/#process">Work Process</a>
+        <a href="/blog">Blog</a>
+        <a onclick="openModal('modal-contact')">Contact</a>
+    </div>
+</footer><div class="modal-container" onclick="closeModal()">
+<div class="modal-content" onclick="event.stopPropagation()">
+    <span class="close icon-close" onclick="closeModal()"></span>
+<div class="content" id="modal-project">
+    <div class="header">
+        <h3>What's Your Project Like?</h3>
+        <div class="subheading">We would love to know about your line of business and how we can help you grow!</div>
+    </div>
+
+    <form action="https://formspree.io/mnqgorpj" method="POST">
+        <input type="email" name="_replyto" required placeholder="your email"/>
+        <textarea name="message" cols="30" rows="7" placeholder="your message" required></textarea>
+        <button>Send</button>
+    </form>
+</div>
+</div>
+</div><div class="modal-container" onclick="closeModal()">
+<div class="modal-content" onclick="event.stopPropagation()">
+    <span class="close icon-close" onclick="closeModal()"></span>
+<div class="content" id="modal-contact">
+    <div class="header">
+        <h3>We'll Respond ASAP</h3>
+        <div class="subheading">We would love to know about your line of business and how we can help you grow!</div>
+    </div>
+
+    <form action="https://formspree.io/mnqgorpj" method="POST">
+        <input type="email" name="_replyto" required placeholder="your email"/>
+        <textarea name="message" cols="30" rows="4" placeholder="your message" required></textarea>
+        <button>Send</button>
+    </form>
+
+    <div class="company-info">
+        <h3>SC Smile Services SRL</h3>
+        <div class="subheading">
+            <p>Operating since December 2009</p>
+            <p>VAT - VIES RO26286942</p>
+            <p>Registered in EU, Romania</p>
+            <p>Bucharest, Aleea Zorelelor no 6</p>
+        </div>
+    </div>
+</div>
+</div>
+</div><script>
+    function openModal(id) {
+        document.getElementsByTagName('body')[0].classList.add('has-modal');
+        document.getElementById(id).parentNode.parentNode.classList.add('open');
+    }
+    function closeModal() {
+        document.getElementsByTagName('body')[0].classList.remove('has-modal');
+        Array.from(document.getElementsByClassName('modal-container open'))
+            .map(modal=>modal.classList.remove('open'));
+    }
+</script>
+</body>
 
 </html>

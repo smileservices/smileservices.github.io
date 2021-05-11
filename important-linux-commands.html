@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Important Unix Commands</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">smileservices </a></h1>
+                <nav><ul>
+                    <li><a href="/pages/home.html">Home</a></li>
+                    <li><a href="/pages/noodles.html">Noodles</a></li>
+                    <li><a href="/category/django.html">Django</a></li>
+                    <li class="active"><a href="/category/linux.html">Linux</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/important-linux-commands.html" rel="bookmark"
+           title="Permalink to Important Unix Commands">Important Unix Commands</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-02-03T10:20:00+01:00">
+                Published: Sat 03 February 2018
+        </abbr>
+		<br />
+        <abbr class="modified" title="2020-07-05T19:30:00+02:00">
+                Updated: Sun 05 July 2020
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/vladimir-gorea.html">vladimir gorea</a>
+        </address>
+<p>In <a href="/category/linux.html">Linux</a>.</p>
+<p>tags: <a href="/tag/linux.html">linux</a> <a href="/tag/unix.html">unix</a> <a href="/tag/cheatsheet.html">cheatsheet</a> </p>
+</footer><!-- /.post-info -->      <h2>Permissions</h2>
+<p>These are the "rights" that an user has on certain files or folders. They are read,write and execute. To folders, execute means opening it. Only the file owner and root can modify the permissions.
+HOWEVER - a file can be replaced by its copy and thus gain access to setting permissions on it</p>
+<div class="highlight"><pre><span></span>chmod <span class="m">777</span> -R <span class="o">{</span>folder<span class="o">}</span>
+</pre></div>
+
+
+<h3>What is the sudo command?</h3>
+<p>The root user is enabled to do anything on the system. This makes it very powerful to use everytime, so instead we use users with limited permissions. For a regular user to access the restricted permissions it must use "sudo" in front of the command. It will prompt for the user password afterwards.</p>
+<p>To add more users to the sudo privileges you must use the "visudo" command to edit the sudo file. Also, to enable an user to use the sudo command, the user must be a member of the sudo group.</p>
+<h2>How to set up users and groups</h2>
+<h3>What are users</h3>
+<p>Linux is a multiuser operating system. There are human users - that log into the system - and system users - used for non-interactive actions. Linux treats them the same, only the ID range of them is different. Users can be in multiple groups at once. The information about users is stored in /etc/passwd file</p>
+<p>Read about linux users on  <a href="https://linuxacademy.com/howtoguides/posts/show/topic/12659-understanding-linux-users-and-groups">linuxacademy</a></p>
+<div class="highlight"><pre><span></span>root@ubuntu:~$ head -1 /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+</pre></div>
+
+
+<p>get current user with "whoami"
+change user with "su"</p>
+<h1>Scripting</h1>
+<p>make script to run as anoher user</p>
+<div class="highlight"><pre><span></span>su - <span class="o">{</span>username<span class="o">}</span> <span class="s">&lt;&lt;-&#39;EOF&#39;</span>
+<span class="s">    {command 1}</span>
+<span class="s">    {command 2}</span>
+<span class="s">EOF</span>
+<span class="c1"># the lines after the EOF will be executed again as the initial user</span>
+</pre></div>
+
+
+<h3>Adding users</h3>
+<p>If an user is created without setting a primary group, then a group with its name is created and assigned to it</p>
+<div class="highlight"><pre><span></span>adduser --home <span class="o">{</span>home address<span class="o">}</span> -c <span class="o">{</span>comment<span class="o">}</span> <span class="o">{</span>user name<span class="o">}</span>
+</pre></div>
+
+
+<p>or single command https://www.computerhope.com/unix/useradd.htm```
+useradd -d {home dir path} -p {encrypted} -m {username}"</p>
+<p>arguments to use:
+-c Adds a comment. -c “John from Accounts”
+-d Specifies home directory for the user. Use this if the name of the home directory is different from the username. -d /home/accounts/john
+-e Specifies the expiration date for the account in YYYY-MM-DD format. -e 2017-01-01
+-g Specifies the primary group of the user. The group must already exist in the /etc/group file. -g accounts
+-G Specifies the additional groups to which the user belongs. -G employees
+-k Specifies the skeleton directory. The contents from the skeleton directory are copied into the user’s home directory. This flag can only be used in conjunction with the -m flag. The default skeleton directory is /etc/skel. -k /skelton/accounts
+-p Specifies the password to be associated with this account. This must be an encrypted password. You can assign the password later using passwd command. -p hashed_password
+-s Specifies the shell to be associated with this account. -s /bin/bash
+-u Specifies the user ID to be used with this account. Without -u flag, the first available user ID will be assigned. -u 1005</p>
+<h3>Get info of user</h3>
+<p>Read /etc/passwd and /etc/group</p>
+<div class="highlight"><pre><span></span>id <span class="o">{</span>user<span class="o">}</span>
+</pre></div>
+
+
+<h3>Modifying users</h3>
+<p>Set password</p>
+<div class="highlight"><pre><span></span>sudo passwd <span class="o">{</span>user<span class="o">}</span>
+</pre></div>
+
+
+<p>Change the home directory (d flag) and copy the old content (m flag)</p>
+<div class="highlight"><pre><span></span>sudo usermod -m -d <span class="o">{</span>new home dir<span class="o">}</span> <span class="o">{</span>user<span class="o">}</span>
+</pre></div>
+
+
+<p>Change user's group</p>
+<p>Change the main group</p>
+<div class="highlight"><pre><span></span>sudo usermod -g <span class="o">{</span>new group<span class="o">}</span> <span class="o">{</span>user<span class="o">}</span>
+</pre></div>
+
+
+<p>Add additional groups</p>
+<div class="highlight"><pre><span></span>sudo usermod -aG <span class="o">{</span>group<span class="o">}</span> <span class="o">{</span>user<span class="o">}</span>
+</pre></div>
+
+
+<p>Replace all additional groups</p>
+<div class="highlight"><pre><span></span>sudo usermod -G <span class="o">{</span>group<span class="o">}</span> <span class="o">{</span>user<span class="o">}</span>
+</pre></div>
+
+
+<p>Remove user from group</p>
+<div class="highlight"><pre><span></span>sudo deluser <span class="o">{</span>user<span class="o">}</span> <span class="o">{</span>group<span class="o">}</span>
+</pre></div>
+
+
+<h3>Delete user</h3>
+<p>This not only deletes the user but also removes all the files that belong to the user including those that are outside the home directory.</p>
+<p>to remove user and its files/home folder add -r flag</p>
+<div class="highlight"><pre><span></span>sudo userdel -r <span class="o">{</span>user<span class="o">}</span>
+</pre></div>
+
+
+<h2>Groups</h2>
+<p>Groups organize users permissions. When a file/folder is created it belongs by default to the user's primary group. Users that share the same group have the permissions set by the file/folder group permissions. </p>
+<p>create new group</p>
+<div class="highlight"><pre><span></span>groupadd <span class="o">{</span>groupname<span class="o">}</span>
+</pre></div>
+
+
+<h3>How to change a folder owner and group</h3>
+<div class="highlight"><pre><span></span>chown <span class="o">{</span>user<span class="o">}</span>:<span class="o">{</span>group<span class="o">}</span> <span class="o">{</span>target<span class="o">}</span>
+</pre></div>
+
+
+<p>to use recursivly apply the -R flag</p>
+<h3>How to see user's groups</h3>
+<div class="highlight"><pre><span></span>groups <span class="o">{</span>user<span class="o">}</span>
+</pre></div>
+
+
+<h3>Change primary group</h3>
+<div class="highlight"><pre><span></span>chgrp <span class="o">{</span>newgroup<span class="o">}</span>
+</pre></div>
+
+
+<h2>SSH</h2>
+<p>Read attlassian article about ssh keys - <a href="https://confluence.atlassian.com/bitbucket/set-up-an-ssh-key-728138079.html#SetupanSSHkey-ssh2">attlassian link</a></p>
+<p>Generate ssh private/public keys:</p>
+<div class="highlight"><pre><span></span>ssh-keygen
+</pre></div>
+
+
+<h4>Configuring ssh settings</h4>
+<p>SSH settings are found at /etc/ssh/sshd_config:</p>
+<div class="highlight"><pre><span></span>PasswordAuthentication no
+</pre></div>
+
+
+<p>Settings that override the global settings for matching IP addresses only</p>
+<div class="highlight"><pre><span></span>Match address <span class="m">192</span>.0.2.0/24
+PasswordAuthentication yes
+</pre></div>
+
+
+<p>Tell the sshd service to reload its configuration:</p>
+<div class="highlight"><pre><span></span>service ssh reload
+</pre></div>
+
+
+<h2>Show processes and their owners</h2>
+<div class="highlight"><pre><span></span>ps -ef <span class="p">|</span> grep nginx
+</pre></div>
+
+
+<h2>ufw (firewall)</h2>
+<div class="highlight"><pre><span></span>sudo ufw status verbose
+sudo ufw <span class="nb">enable</span>
+sudo ufw allow http
+sudo ufw allow https
+...
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow ssh
+sudo ufw allow <span class="m">22</span>
+sudo ufw allow from <span class="m">15</span>.15.15.51
+</pre></div>
+
+
+<h2>ports</h2>
+<p>see all ports</p>
+<div class="highlight"><pre><span></span>sudo netstat -tulpn
+</pre></div>
+
+
+<h2>tmux</h2>
+<p>A terminal multiplexer (simulates multiple terminals inside one)</p>
+<h4>fix garbled screen</h4>
+<ul>
+<li>create .tmux.conf:</li>
+</ul>
+<div class="highlight"><pre><span></span>sudo tmux show -g <span class="p">|</span> cat &gt; /etc/.tmux.conf
+</pre></div>
+
+
+<ul>
+<li>add this:</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="nb">set</span> -as terminal-overrides <span class="s1">&#39;,*:indn@&#39;</span>
+</pre></div>
+
+
+<h2>access address or port (curl, wget)</h2>
+<div class="highlight"><pre><span></span>curl <span class="o">{</span>address<span class="o">}</span>:<span class="o">{</span>port<span class="o">}</span>
+</pre></div>
+
+
+<h1>Filesystem</h1>
+<h2>Empty file without removing</h2>
+<div class="highlight"><pre><span></span>truncate -s <span class="m">0</span> filename
+&gt; file.txt
+</pre></div>
+
+
+<h2>disk space</h2>
+<div class="highlight"><pre><span></span>df -h
+</pre></div>
+
+
+<h2>symlink</h2>
+<p>Read article about <a href="https://www.cyberciti.biz/faq/creating-soft-link-or-symbolic-link/">what is a symbolic link</a></p>
+<p>Read Read article <a href="https://stackoverflow.com/a/185903/1957846">explaining soft/hard links</a></p>
+<p>create soft link</p>
+<div class="highlight"><pre><span></span>ln -s file1 link1
+</pre></div>
+
+
+<p>verify</p>
+<div class="highlight"><pre><span></span>ls -l file1 link1
+</pre></div>
+
+
+<p>IMPORTANT: provide full path to file and links not relative to cwd</p>
+<h2>Mount/Unmount drives</h2>
+<div class="highlight"><pre><span></span><span class="err">fdisk -l</span>
+<span class="err">sudo mount /dev/sdb1 /media/usb-drive/</span>
+</pre></div>
+
+
+<h1>System check</h1>
+<p>available memory</p>
+<div class="highlight"><pre><span></span>free -m
+vmstat -s
+htop
+</pre></div>
+
+
+<h1>snaps</h1>
+<p>Article about managing <a href="https://www.freecodecamp.org/news/managing-ubuntu-snaps/">ubuntu snaps</a></p>
+<p>list all snap services</p>
+<div class="highlight"><pre><span></span>snap services
+</pre></div>
+
+
+<p>stop service</p>
+<div class="highlight"><pre><span></span>sudo snap stop -disable <span class="o">{</span>servicename<span class="o">}</span>
+</pre></div>
+
+
+<h1>find</h1>
+<p>How to use <code>find</code> command: https://www.geeksforgeeks.org/find-command-in-linux-with-examples/</p>
+<p>General search for a file. example </p>
+<div class="highlight"><pre><span></span>find <span class="o">{</span>path<span class="o">}</span> -name *.txt
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

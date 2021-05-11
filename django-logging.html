@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Django Logging</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">smileservices </a></h1>
+                <nav><ul>
+                    <li><a href="/pages/home.html">Home</a></li>
+                    <li><a href="/pages/noodles.html">Noodles</a></li>
+                    <li class="active"><a href="/category/django.html">Django</a></li>
+                    <li><a href="/category/linux.html">Linux</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/django-logging.html" rel="bookmark"
+           title="Permalink to Django Logging">Django Logging</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2019-04-03T10:20:00+02:00">
+                Published: Wed 03 April 2019
+        </abbr>
+		<br />
+        <abbr class="modified" title="2020-07-05T19:30:00+02:00">
+                Updated: Sun 05 July 2020
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/vladimir-gorea.html">vladimir gorea</a>
+        </address>
+<p>In <a href="/category/django.html">Django</a>.</p>
+<p>tags: <a href="/tag/django.html">django</a> <a href="/tag/logging.html">logging</a> </p>
+</footer><!-- /.post-info -->      <h2>Resources for reading</h2>
+<p><a href="https://lincolnloop.com/blog/django-logging-right-way/">django logging the right way</a>
+<a href="https://djangodeconstructed.com/2018/12/18/django-and-python-logging-in-plain-english/">django and logging in plain english</a>
+<a href="https://mattsegal.dev/file-logging-django.html">django logging in production</a></p>
+<h2>Basic usage</h2>
+<ol>
+<li>Loggers are messages containers</li>
+<li>Handlers are directing loggers to various output destinations like files, console, email, etc</li>
+<li>Filters can be used for both loggers and handlers</li>
+<li>Formatters handle how to output the messages. Belong to handlers</li>
+</ol>
+<p>set up logging in settings.py</p>
+<div class="highlight"><pre><span></span><span class="err">LOGGING = {</span>
+<span class="err">    &#39;version&#39;: 1,</span>
+<span class="err">    &#39;disable_existing_loggers&#39;: False,</span>
+<span class="err">    &#39;formatters&#39;: {</span>
+<span class="err">        &#39;verbose&#39;: {</span>
+<span class="err">            &#39;format&#39;: &#39;{levelname} {asctime} {module} {process:d} {thread:d} {message}&#39;,</span>
+<span class="err">            &#39;style&#39;: &#39;{&#39;,</span>
+<span class="err">        },</span>
+<span class="err">        &#39;simple&#39;: {</span>
+<span class="err">            &#39;format&#39;: &#39;{levelname} {message}&#39;,</span>
+<span class="err">            &#39;style&#39;: &#39;{&#39;,</span>
+<span class="err">        },</span>
+<span class="err">    },</span>
+<span class="err">    &#39;handlers&#39;: {</span>
+<span class="err">        &#39;console&#39;: {</span>
+<span class="err">            &#39;class&#39;: &#39;logging.StreamHandler&#39;,</span>
+<span class="err">            &#39;formatter&#39;: &#39;verbose&#39;</span>
+<span class="err">        },</span>
+<span class="err">    },</span>
+<span class="err">    &#39;root&#39;: {</span>
+<span class="err">        &#39;handlers&#39;: [&#39;console&#39;],</span>
+<span class="err">        &#39;level&#39;: &#39;WARNING&#39;,</span>
+<span class="err">    },</span>
+<span class="err">    &#39;django&#39;: {</span>
+<span class="err">        &#39;handlers&#39;: [&#39;console&#39;],</span>
+<span class="err">        &#39;level&#39;: &#39;DEBUG&#39;,</span>
+<span class="err">        &#39;propagate&#39;: True,</span>
+<span class="err">    },</span>
+<span class="err">    &#39;someapp.urls&#39;: {</span>
+<span class="err">        &#39;handlers&#39;: [&#39;console&#39;],</span>
+<span class="err">        &#39;level&#39;: &#39;DEBUG&#39;,</span>
+<span class="err">        &#39;propagate&#39;: True,</span>
+<span class="err">    }</span>
+<span class="err">}</span>
+</pre></div>
+
+
+<p>use logger</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</pre></div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

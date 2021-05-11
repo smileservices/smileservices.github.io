@@ -9,13 +9,9 @@
 
     <title>Deploying Django App</title>
 
-    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900"
-          rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="/theme/css/homepage_style.css" rel="stylesheet">
-<link href="/theme/css/clean-blog.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,500,700">
+    <link href="/theme/css/main.css" rel="stylesheet">
+    <link href="/theme/icons/style.css" rel="stylesheet">
 <link href="/theme/css/code_blocks/darkly.css" rel="stylesheet">
 
 
@@ -30,6 +26,10 @@
 <meta name="tags" content="django">
 <meta name="tags" content="unix">
 <meta name="tags" content="deployment">
+<meta name="tags" content="ssl">
+<meta name="tags" content="certbot">
+<meta name="tags" content="postgresql">
+<meta name="tags" content="nginx">
 
     <meta property="og:locale" content="">
     <meta property="og:site_name" content="smile services">
@@ -42,74 +42,71 @@
 <meta property="og:description" content="How to set up a Django app deployment on an Ubuntu server: initial configuration of the server and then setting up the app">
 
 <meta property="og:image" content="/theme/images/post-bg.jpg">
-    <link rel="icon" type="image/svg+xml" href="/theme/images/logo_small.svg">
+    <link rel="icon" type="image/png" href="/theme/images/logo.svg">
 </head>
 
 <body>
-<nav class="navbar navbar-expand-md fixed-top">
-    <div class="container">
-        <input type="checkbox" id="navbar-toggle-cbox">
-        <a class="navbar-brand" href="/">
-            <svg viewBox="0 0 80 120" width="30" height="30" preserveAspectRatio="xMidYMid meet">
-                <g transform="translate(0.000000,104.000000) scale(0.100000,-0.100000)">
-                    <path d="M208 1029 c-72 -11 -146 -56 -171 -104 -20 -37 -22 -58 -25 -257 l-4
--218 70 0 70 0 4 205 3 205 28 27 c23 23 36 28 77 28 41 0 54 -5 77 -28 l28
--27 3 -205 3 -205 70 0 69 0 0 194 c0 107 4 206 10 220 21 57 128 73 174 27
-20 -20 21 -35 26 -217 6 -226 6 -227 95 -222 l50 3 0 205 c0 216 -6 249 -49
-299 -62 70 -233 96 -326 48 l-45 -22 -50 21 c-60 26 -123 34 -187 23z"></path>
-                    <path d="M24 303 c13 -100 82 -195 173 -242 203 -103 486 -57 599 98 31 43 44
-79 59 159 l7 32 -71 0 c-69 0 -71 -1 -77 -27 -22 -103 -84 -152 -217 -174 -94
--15 -219 16 -281 70 -24 21 -56 84 -56 111 0 18 -6 20 -71 20 l-72 0 7 -47z"></path>
-                </g>
-            </svg>
+<nav>
+    <div class="left-side">
+        <a class="logo" href="/">
+            <img src="/theme/images/logo.svg" alt="">
+            SmileServices.dev
         </a>
-        <label for="navbar-toggle-cbox" class="navbar-toggler navbar-toggle collapsed" data-toggle="collapse"
-               data-target="#navbar"
-               aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span>
-                <svg viewBox="0 0 80 20" width="30" height="30">
-                  <rect width="80" height="10"></rect>
-                  <rect y="20" width="80" height="10"></rect>
-                  <rect y="40" width="80" height="10"></rect>
-                </svg>
-            </span>
-        </label>
-        <div class="navbar-collapse collapse" id="navbar">
-            <ul class="navbar-nav mr-auto">
+    </div>
+    <div class="right-side">
+        <div class="menu-container" id="navbar-menu">
+            <ul class="nav-menu mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/#showcases">Showcases</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/#process">Work Process</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/blog">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/#tech-stack">Technology</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/#contact">Contact</a>
+                    <a class="nav-link cta-button" onclick="openModal('modal-contact')">Contact</a>
                 </li>
             </ul>
         </div>
+        <div class="toggle-nav-menu" onclick="document.getElementById('navbar-menu').classList.toggle('open')">
+            <svg width="25" height="21" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0.993408" y1="2.45703" x2="24.9934" y2="2.45703" stroke-width="4"/>
+                <line x1="0.993408" y1="10.457" x2="24.9934" y2="10.457" stroke-width="4"/>
+                <line x1="0.993408" y1="18.457" x2="24.9934" y2="18.457" stroke-width="4"/>
+            </svg>
+        </div>
     </div>
-</nav><!-- Page Header -->
-            <header class="jumbotron"
-                    style="background-image: url('/theme/images/post-bg.jpg')">
-                <div id="particles">
-                </div>
-                <div class="slider">
-                    <h1>Deploying Django App</h1>
-                    <span class="meta">Posted by
-                    <a href="/author/vladimir-gorea.html">vladimir gorea</a>
-                 on Sun 03 June 2018
-        </span>
-                    <span class="meta">Updated on Sun 05 July 2020</span>
-                    
-                </div>
-            </header>
-            <!-- Post Content -->
-            <section class="article">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8 col-lg-offset-2 col-md-12">
-                            <h2>Workplan</h2>
+</nav><header>
+    <div class="left-side">
+        <h1>Blog</h1>
+    </div>
+    <div class="right-side">
+        <div class="subtext">
+            <h3>Cost <span class="blue-text">effective</span> solutions</h3>
+            <h3>Productive meetings with <span class="blue-text">fast deliveries</span></h3>
+            <h3><span class="blue-text">24/7 support</span> with sameday response</h3>
+        </div>
+    </div>
+</header>
+<!-- Post Content -->
+<section class="article">
+    <div class="header">
+        <h2>Deploying Django App</h2>
+        <div class="subheading">
+            
+        </div>
+        <div class="smalltext">
+            <span class="meta">Posted by
+                <a href="/author/vladimir-gorea.html">vladimir gorea</a>
+             on Sun 03 June 2018</span>
+<span class="meta">Updated on Sun 05 July 2020</span>        </div>
+    </div>
+    <h3>Intro</h3>
+<p>How to set up a Django app deployment on an Ubuntu server: initial configuration of the server and then setting up the app.</p>
+<h3>Workplan</h3>
+<p>Deploying Django app is not an easy task. Need to take care of setting up the server, proxyserver, SSL certificate, database connections.</p>
 <ol>
 <li>Install nginx, python, virtualenv, certbot, postgresql etc</li>
 <li>Create user named as app</li>
@@ -120,8 +117,8 @@
 <li>Create nginx config file</li>
 <li>Add gunicorn service to systemd or supervisor</li>
 </ol>
-<h2>Initial setup</h2>
-<p>create user with sudo rights</p>
+<h3>Initial setup</h3>
+<p>Create user with sudo rights</p>
 <div class="highlight"><pre><span></span>adduser <span class="o">{</span>name<span class="o">}</span>
 paswd <span class="o">{</span>name<span class="o">}</span>
 usermod -aG sudo <span class="o">{</span>name<span class="o">}</span>
@@ -129,12 +126,13 @@ su <span class="o">{</span>name<span class="o">}</span>
 </pre></div>
 
 
+<p>Once we have the user set up, there are still a few steps to take care of:</p>
 <ul>
-<li>add publickey and set up ssh connection</li>
-<li>remove password and root login</li>
-<li>create user for each app</li>
+<li>Add publickey and set up ssh connection</li>
+<li>Remove password and root login</li>
+<li>Create user for each app</li>
 </ul>
-<h2>Install python,django,virtualenv,nginx,gunicorn</h2>
+<h3>Install python,django,virtualenv,nginx,gunicorn</h3>
 <div class="highlight"><pre><span></span>sudo apt-get update
 sudo apt-get -y upgrade
 sudo apt install certbot
@@ -150,35 +148,35 @@ sudo apt-get -y install python3-pip
 </pre></div>
 
 
-<p>Install optional Redis, Elasticsearch</p>
-<h2>Set up django project</h2>
+<p>Some projects might require install an optional memory key-value database for caching like Redis</p>
+<h3>Set up django project</h3>
+<p>Create new user for each app</p>
 <ul>
-<li>create new user for each app
-adduser {user}</li>
-<li>create (virtual env)[https://docs.python.org/3/library/venv.html] in ~/www/{project_name}</li>
+<li>Create linux user for app <code>adduser {username}</code></li>
+<li>Create <a href="https://docs.python.org/3/library/venv.html">virtual env</a> in <code>~/www/{project_name}</code></li>
 </ul>
 <div class="highlight"><pre><span></span>python3 -m venv <span class="o">{</span>project_name<span class="o">}</span>
 </pre></div>
 
 
 <ul>
-<li>activate the venv </li>
+<li>Activate the venv </li>
 </ul>
 <div class="highlight"><pre><span></span><span class="nb">source</span> ~/www/<span class="o">{</span>project_name<span class="o">}</span>
 </pre></div>
 
 
 <ul>
-<li>clone repo in ~/www/{project_name}/repo</li>
-<li>install requirements</li>
+<li>Alone repo in ~/www/{project_name}/repo</li>
+<li>Install requirements</li>
 </ul>
 <div class="highlight"><pre><span></span>pip install -r repo/requirements.txt
 </pre></div>
 
 
 <ul>
-<li>create .env file (if project requires it)</li>
-<li>collectstatic and create superuser</li>
+<li>Create .env file (if project requires it)</li>
+<li>Collectstatic and create superuser</li>
 </ul>
 <div class="highlight"><pre><span></span>python manage.py collectstatic
 python manage.py makemigrations
@@ -187,7 +185,7 @@ python manage.py createsuperuser
 </pre></div>
 
 
-<h2>Set up postgresql</h2>
+<h3>Set up PostgreSQL</h3>
 <div class="highlight"><pre><span></span>sudo apt-get -y install build-essential libpq-dev python-dev
 sudo apt-get -y install postgresql postgresql-contrib
 su - postgres
@@ -197,8 +195,8 @@ psql -c <span class="s2">&quot;ALTER USER {db_username} WITH PASSWORD &#39;{pass
 </pre></div>
 
 
-<h2>Set up gunicorn</h2>
-<p>create gunicorn_start file in {app root}/bin/</p>
+<h3>Set up Gunicorn (acting as proxyserver)</h3>
+<p>Create gunicorn_start file in {app root}/bin/</p>
 <div class="highlight"><pre><span></span><span class="c1"># gunicorn_start file</span>
 <span class="c1">#!/bin/bash</span>
 
@@ -235,12 +233,12 @@ psql -c <span class="s2">&quot;ALTER USER {db_username} WITH PASSWORD &#39;{pass
 
 
 <ul>
-<li>create empty directory 'run' where gunicorn.sock will be created</li>
-<li>create directory 'logs' with empty file gunicorn-error.log</li>
+<li>Create empty directory 'run' where gunicorn.sock will be created</li>
+<li>Create directory 'logs' with empty file gunicorn-error.log</li>
 </ul>
-<h3>Add gunicorn to supervisor or systemd</h3>
+<p><strong>Add gunicorn to supervisor or systemd</strong></p>
 <p>This step is required for making sure django app is run even if it stops
-- set up supervisor /etc/supervisor/conf.d/{name}.conf</p>
+- Set up supervisor /etc/supervisor/conf.d/{name}.conf</p>
 <div class="highlight"><pre><span></span><span class="o">[</span>program:<span class="o">{</span>name<span class="o">}]</span>
 <span class="nv">command</span><span class="o">=</span>/home/<span class="o">{</span>user<span class="o">}</span>/www/<span class="o">{</span>dir<span class="o">}</span>/bin/gunicorn_start
 <span class="nv">user</span><span class="o">={</span>user<span class="o">}</span>
@@ -252,17 +250,15 @@ psql -c <span class="s2">&quot;ALTER USER {db_username} WITH PASSWORD &#39;{pass
 
 
 <ul>
-<li>add the new task to supervisor</li>
+<li>Add the new task to supervisor</li>
 </ul>
 <div class="highlight"><pre><span></span>sudo supervisorctl reread
 sudo supervisorctl update
 </pre></div>
 
 
-<h2>Set up nginx</h2>
-<ul>
-<li>create vhost file in /etc/nginx/sites-available/{name}</li>
-</ul>
+<h3>Set up nginx</h3>
+<p>Create vhost file in /etc/nginx/sites-available/{name}</p>
 <div class="highlight"><pre><span></span>upstream app_memeashirt_test <span class="o">{</span>                                                                    
     server unix:/home/smileservices/www/memeashirt.smile-services.ro/run/gunicorn.sock <span class="nv">fail_timeout</span><span class="o">=</span><span class="m">0</span><span class="p">;</span>
 <span class="o">}</span>                                                                                                 
@@ -311,45 +307,78 @@ sudo service nginx restart
 </pre></div>
 
 
-<h1>Set up ssl</h1>
+<h3>Set up ssl</h3>
+<p>We'll create the SSL certificate ourselves, for free, using <code>certbot</code></p>
 <div class="highlight"><pre><span></span>sudo certbot --nginx -d <span class="o">{</span>domain name<span class="o">}</span> 
 </pre></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    <div class="tags">
+<a href="/tag/linux.html">linux</a><a href="/tag/django.html">django</a><a href="/tag/unix.html">unix</a><a href="/tag/deployment.html">deployment</a><a href="/tag/ssl.html">ssl</a><a href="/tag/certbot.html">certbot</a><a href="/tag/postgresql.html">postgresql</a><a href="/tag/nginx.html">nginx</a>    </div>
+</section>
 
-            <section class="article">
-                <div class="container">
-                    <div class="tags">
-                        <p>tags: <a href="/tag/linux.html">linux</a>, <a href="/tag/django.html">django</a>, <a href="/tag/unix.html">unix</a>, <a href="/tag/deployment.html">deployment</a></p>
-                    </div>
-                </div>
-            </section>
+<footer>
+    <div class="left-side">
+        <div class="logo">SmileServices.dev</div>
+        <div class="small">© 2020, smileservices.dev All Rights Reserved.</div>
+    </div>
+    <div class="right-side">
+        <a href="/#showcases">Showcases</a>
+        <a href="/#process">Work Process</a>
+        <a href="/blog">Blog</a>
+        <a onclick="openModal('modal-contact')">Contact</a>
+    </div>
+</footer><div class="modal-container" onclick="closeModal()">
+<div class="modal-content" onclick="event.stopPropagation()">
+    <span class="close icon-close" onclick="closeModal()"></span>
+<div class="content" id="modal-project">
+    <div class="header">
+        <h3>What's Your Project Like?</h3>
+        <div class="subheading">We would love to know about your line of business and how we can help you grow!</div>
+    </div>
 
-            <script>
-                var fullHeightJumbotron = false;
-            </script>
-<script src="/theme/js/particles.min.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var STATIC_URL = "/theme"
-        var myNav = document.querySelector('nav');
-        var jumbotron = document.querySelector('.jumbotron');
-        var slider = document.querySelector('.slider');
-        window.onscroll = function () {
-            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-            "use strict";
-            if (scrollTop >= jumbotron.offsetHeight - myNav.offsetHeight) {
-                myNav.classList.add("stuck");
-            } else {
-                myNav.classList.remove("stuck");
-            }
-        };
-        jumbotron.setAttribute('style', 'height: ' + (fullHeightJumbotron ? window.innerHeight : slider.height * 1.8) + 'px');
-        particlesJS.load('particles', STATIC_URL + '/js/particles.json', function () {
-        });
-    });
-</script></body>
+    <form action="https://formspree.io/mnqgorpj" method="POST">
+        <input type="email" name="_replyto" required placeholder="your email"/>
+        <textarea name="message" cols="30" rows="7" placeholder="your message" required></textarea>
+        <button>Send</button>
+    </form>
+</div>
+</div>
+</div><div class="modal-container" onclick="closeModal()">
+<div class="modal-content" onclick="event.stopPropagation()">
+    <span class="close icon-close" onclick="closeModal()"></span>
+<div class="content" id="modal-contact">
+    <div class="header">
+        <h3>We'll Respond ASAP</h3>
+        <div class="subheading">We would love to know about your line of business and how we can help you grow!</div>
+    </div>
+
+    <form action="https://formspree.io/mnqgorpj" method="POST">
+        <input type="email" name="_replyto" required placeholder="your email"/>
+        <textarea name="message" cols="30" rows="4" placeholder="your message" required></textarea>
+        <button>Send</button>
+    </form>
+
+    <div class="company-info">
+        <h3>SC Smile Services SRL</h3>
+        <div class="subheading">
+            <p>Operating since December 2009</p>
+            <p>VAT - VIES RO26286942</p>
+            <p>Registered in EU, Romania</p>
+            <p>Bucharest, Aleea Zorelelor no 6</p>
+        </div>
+    </div>
+</div>
+</div>
+</div><script>
+    function openModal(id) {
+        document.getElementsByTagName('body')[0].classList.add('has-modal');
+        document.getElementById(id).parentNode.parentNode.classList.add('open');
+    }
+    function closeModal() {
+        document.getElementsByTagName('body')[0].classList.remove('has-modal');
+        Array.from(document.getElementsByClassName('modal-container open'))
+            .map(modal=>modal.classList.remove('open'));
+    }
+</script>
+</body>
 
 </html>
